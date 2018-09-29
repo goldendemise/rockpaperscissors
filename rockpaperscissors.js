@@ -15,7 +15,7 @@ function computerChoice() {
 			compChoice = "scissors";
 			break;
 		default:
-			compChoice = "ERROR, rand not parsed properly";
+			compChoice = "ERROR, random number  not generated properly";
 	}
 		return compChoice;
 }
