@@ -19,15 +19,25 @@ function computerChoice() {
 	}
 		return compChoice;
 }
-function getPlayerChoice() {
-let playerChoice = prompt("Please enter your choice between rock, paper, and scissors").toLowerCase();
-	return playerChoice;
-}
+const runningTotal = document.querySelector('#running-total');
+const section = document.querySelector('#game-state');
+const result = document.createElement('section');
+result.classList.add('running-totals');
+result.textContent = 'Welcome to RPS VR, Game of Kings';
+section.appendChild(result);
+const buttons = document.querySelectorAll('button');
+buttons.forEach( (button) => {
+	button.addEventListener('click', (e) => {
+		playRound(button.id,computerChoice());
+
+	});
+});
 function playRound(playerSelection, computerSelection) {
 	if(playerSelection == computerSelection) {
-	console.log("Draw Round. Player and computer both chose " + playerSelection);
+		result.textContent = "Draw game!";
 		return;
 	}
+	result.textContent = "Player chose " + playerSelection + " and computer chose " + computerSelection;
 	//While technically valid, this is hacky from what I read. Still beats gross numbers of chained ifs for readability imo
 	switch(true) {
 		case playerSelection == "rock" && computerSelection == "scissors":
@@ -62,22 +72,15 @@ function playRound(playerSelection, computerSelection) {
 		default:
 			console.log("Invalid User Input");
 			}
-}
+			runningTotal.textContent = "Player:" + playerWins + " | Computer:" + compWins;
 
-function game() {
-let i = 0;
-	while(i<5) {
-		console.log("This is round " + (i + 1));
-		playRound(getPlayerChoice(),computerChoice());
-		i++;
+			if( playerWins === 5) {
+				result.textContent = "Player wins, first to 5";
+				compWins = 0;
+				playerWins = 0;
+			} else if( compWins === 5) {
+				result.textContent = "Computer wins, first to 5";
+				compWins = 0;
+				playerWins = 0;
+			}
 }
-if(compWins > playerWins) {
-	console.log("The computer has " + compWins + " and the player has " + playerWins + ". Computer wins!");
-} else if(playerWins > compWins) {
-	console.log("The computer has " + compWins + " and the player has " + playerWins + ". Player wins!");
-} else {
-	console.log("Draw game!");
-}
-}
-
-game();
